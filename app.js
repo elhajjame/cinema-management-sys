@@ -3,23 +3,28 @@ const spectators = [];
 const sessions = [];
 const ticket = [];
 
-function spectators(){
+function spectatorsss(){
+    const name = prompt("enter Spectator name: ");
+    let objSpectator = {name : name}
+    spectators.push(objSpectator);
+
+   }
+  
+
+ 
+function session(){
 
 }
 
-function sessions(){
+// function ticket(){
+//     const objTickets ={
+//         id : ticketId++,
+//         price : price,
 
-}
+//     }
+// }
 
-function tickets(){
-    const objTickets ={
-        id : ticketId++,
-        price : price,
-
-    }
-}
-
-
+mainMenu();
 
 function mainMenu() {
     while (true) {
@@ -42,6 +47,7 @@ function mainMenu() {
     const choice = prompt("choose an option: ")
             switch(choice){
                 case "1":
+                    spectatorsss();
                     break;
             }
     }
