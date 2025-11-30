@@ -25,7 +25,7 @@ function session() {
     const category = prompt("enter movie category: ");
 
     const sessionObj = { sessionId: sessionId++, movieName: movieName, SessionTime: SessionTime, room: room, category: category };
-    sessions.push(session);
+    sessions.push(sessionObj);
 
     const allowed = ["action", "comedy", "romance", "anime", "drama", "horror"];
     if (!allowed.includes(category)) {
@@ -50,11 +50,10 @@ function CreateTicket() {
             console.log("spectator not found!");
             return;
         }
-
     }
-    for (let i = 0; i < sessions.length; i++) {
-        if (sessions[i].sessionId !== Number(sessionID)) {
-            foundSession = sessions[i];
+    for (const element of sessions) {
+        if (element.sessionId === Number(sessionID)) {
+            foundSession = element;
             break;
         }
         if (!foundSession) {
@@ -63,23 +62,43 @@ function CreateTicket() {
         }
     }
     const basePrice = 40;
-    let finalPrice;
+    let finalPrice = basePrice;
 
-    if (foundSession.category === "action")finalPrice = basePrice + 10;
-    if(foundSession.category === "drama") finalPrice += 20;
+    if (foundSession.category === "action") { finalPrice = basePrice + 10 };
+    if (foundSession.category === "drama") finalPrice += 20;
     if (foundSession.category === "anime") finalPrice += 15;
-    if(foundSession.category === "comedy") finalPrice += 9;
-    if(foundSession.category === "horror") finalPrice += 19;
+    if (foundSession.category === "comedy") finalPrice += 9;
+    if (foundSession.category === "horror") finalPrice += 19;
 
     const objTickets = {
         id: ticketId++,
+        movie: foundSession.movieName,
         price: finalPrice,
         category: foundSession.category
     };
     tickets.push(objTickets);
 
-        console.log("✔ Ticket created successfully!");
+    console.log("✔ Ticket created successfully!");
     console.log(objTickets);
+}
+
+function displayMovies() {
+    
+    if (sessions.length === 0) {
+        console.log("no movies available at the moment.");
+        return;
+    }
+     console.log("available Movies:");
+
+    sessions.forEach(session => {
+        console.log(`Movie Name : ${session.movieName}`);
+        console.log(`Session ID : ${session.sessionId}`);
+        console.log(`Time       : ${session.SessionTime}`);
+        console.log(`Room       : ${session.room}`);
+        console.log(`Category   : ${session.category}`);
+        console.log('-----------------------------');
+    });
+
 }
 
 mainMenu();
@@ -111,6 +130,9 @@ function mainMenu() {
                 break;
             case "3":
                 CreateTicket();
+                break;
+            case "5":
+                displayMovies();
                 break;
             case "0":
                 console.log("bye");
